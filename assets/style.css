@@ -3,7 +3,7 @@
 #toc {
     position: fixed;
     top: 110px;              /* cách header 1 chút */
-    left: 20px;
+    left: 40px;
     width: 230px;
     max-height: 80vh;
     overflow-y: auto;
