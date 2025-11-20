@@ -46,7 +46,8 @@
 .post-content,
 .post-body,
 article {
-    margin-left: 180px !important; /* đủ để không bị chồng */
+    margin-left: 180px !important; 
+    margin-right: auto !important;
 }
 
 /* ======= RESPONSIVE ======= */
