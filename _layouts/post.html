@@ -5,22 +5,6 @@ layout: default
 <article>
   <h2>{{ page.title }}</h2>
   <time datetime="{{ page.date | date_to_xmlschema }}" class="by-line">{{ page.date | date_to_string }}</time>
-  
-  {% assign entry_content = content %}
-
-  {% assign html_toc = entry_content | toc_generate: include_levels="2,3" %}
-
-  {% if html_toc %}
-    <div id="toc-container">
-      <nav id="toc" class="toc-style">
-        <h2>Mục lục nội dung</h2>
-        {{ html_toc }}
-      </nav>
-    </div>
-  {% endif %}
-
-  <div class="post-content">
-      {{ content }}
-  </div>
-
+  <script src="{{ '/assets/toc.js' | relative_url }}"></script>
+  {{ content }}
 </article>
