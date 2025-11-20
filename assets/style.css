@@ -80,3 +80,7 @@ article {
     background: #555;
     border-radius: 3px;
 }
+/* Thêm scroll-behavior: smooth vào phần tử gốc */
+html {
+    scroll-behavior: smooth;
+}
