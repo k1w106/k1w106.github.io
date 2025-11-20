@@ -10,7 +10,10 @@
     padding: 10px 5px;
     z-index: 9999;
 }
-
+.active-toc-item a {
+    color: #ffffff !important; /* Màu trắng cho mục đang xem */
+    font-weight: bold;
+}
 /* Style TOC text */
 #markdown-toc ul,
 #toc ul {
@@ -43,7 +46,7 @@
 .post-content,
 .post-body,
 article {
-    margin-left: 180px !important; /* đủ để không bị chồng */
+    margin-left: 100px !important; /* đủ để không bị chồng */
 }
 
 /* ======= RESPONSIVE ======= */
