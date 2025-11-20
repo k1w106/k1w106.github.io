@@ -1,0 +1,36 @@
+/* Sidebar TOC cố định */
+#sidebar {
+  position: fixed;
+  left: 20px;
+  top: 120px;
+  width: 220px;
+  height: calc(100vh - 140px); /* chiều cao vừa màn hình */
+  overflow-y: auto; /* nếu TOC dài thì scroll trong sidebar */
+  padding-right: 10px;
+
+  /* Theme Hacker style */
+  color: #9f9;
+  font-size: 14px;
+}
+
+/* Tiêu đề TOC */
+#sidebar h3 {
+  margin-bottom: 10px;
+  color: #9f9;
+  font-weight: bold;
+}
+
+/* Các link trong TOC */
+#sidebar a {
+  color: #6cf;
+  text-decoration: none;
+}
+
+#sidebar a:hover {
+  text-decoration: underline;
+}
+
+/* Đẩy phần nội dung qua phải */
+#main_content {
+  margin-left: 260px;
+}
