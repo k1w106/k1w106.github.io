@@ -8,7 +8,6 @@
     max-height: 80vh;
     overflow-y: auto;
     padding: 10px 5px;
-    border-right: 1px solid #333;
     z-index: 9999;
 }
 
@@ -44,7 +43,7 @@
 .post-content,
 .post-body,
 article {
-    margin-left: 200px !important; /* đủ để không bị chồng */
+    margin-left: 180px !important; /* đủ để không bị chồng */
 }
 
 /* ======= RESPONSIVE ======= */
