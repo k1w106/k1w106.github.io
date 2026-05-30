@@ -93,7 +93,7 @@ layout = "grid"
 
 [config.home.quote]
 text = [
-  "An ordinary student who are interested in XNU kernel exploitation."
+  "An ordinary student interested in XNU kernel exploitation."
 ]
 image = ""
 
