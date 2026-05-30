@@ -1,9 +1,9 @@
 [config.site]
 title = "navfolio"
 description = "A personal navigation portfolio starter built with Astro."
-pageTitle = "navfolio | Digital Publication Space"
+pageTitle = "k1w1"
 pageDescription = "A calm AI-native personal publication space for notes, links, and writing."
-repository = "https://github.com/dodolalorc/astro-navfolio"
+repository = "https://github.com/k1w106"
 footerNote = "Released as an open-source starter."
 
 [config.vibe]
@@ -65,14 +65,14 @@ pageview = true
 comment = true
 
 [config.profile]
-name = "navfolio"
-handle = "@navfolio"
-role = "A Cat Developer"
-company = "Independent Studio"
-location = "Remote"
-email = "hello@navfolio.site"
-website = "https://astro.navfolio.site/"
-github = "https://github.com/dodolalorc/astro-navfolio"
+name = "k1w1"
+handle = "@VNUHCM - University of Information Technology Student"
+role = "A XNU kernel learner"
+company = ""
+location = ""
+email = "huynhnhatduy34@gmail.com"
+website = "https://k1w106.github.io/"
+github = "https://github.com/k1w106"
 meta = "Open-source maintainer"
 avatar = "/images/logo.png"
 
