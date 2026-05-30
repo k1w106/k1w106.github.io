@@ -108,6 +108,8 @@ image = ""
 [config.home.intro]
 title = "welcome to my blog"
 name = "blog"
+body = [""]
+image = ""
 
 
 [config.home.latest]
