@@ -18,9 +18,7 @@ sidebar:
 
 > Similar to amd64, the mov instruction can be used. However, literal values must be prefixed with the # symbol!
 >
-> Please set the following:
->
->         **X1 = 0x1337**
+> Please set the following: **X1 = 0x1337**
 
 It is the same as amd64 syntax, but the name of register is not the same.
 
