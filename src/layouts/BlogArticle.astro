@@ -508,6 +508,18 @@ const hasSidebar = shouldRenderSidebar && hasToc;
     line-height: 1.3;
   }
 
+  @media (min-width: 1181px) {
+    .blog-layout {
+      --blog-shell-width: 1324px;
+      width: min(100%, var(--blog-shell-width));
+      padding-left: calc((min(100%, var(--blog-shell-width)) - 900px) / 2);
+      padding-right: var(--layout-page-gutter);
+      padding-top: var(--layout-page-top);
+      padding-bottom: var(--layout-page-bottom);
+      margin: 0 auto;
+    }
+  }
+
   @media (max-width: 1180px) {
     .blog-layout {
       grid-template-columns: minmax(0, 720px) 238px;
