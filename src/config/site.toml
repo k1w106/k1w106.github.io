@@ -74,7 +74,7 @@ email = "huynhnhatduy34@gmail.com"
 website = "https://k1w106.github.io/"
 github = "https://github.com/k1w106"
 meta = "Open-source maintainer"
-avatar = "/images/logo.png"
+avatar = "/images/logo.jpeg"
 
 [[config.topNav.links]]
 label = "Home"
