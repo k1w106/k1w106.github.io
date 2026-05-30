@@ -16,7 +16,8 @@ sidebar:
 
 # Level 1
 
-> Similar to amd64, the mov instruction can be used. However, literal values must be prefixed with the # symbol!<br>
+> Similar to amd64, the mov instruction can be used. However, literal values must be prefixed with the # symbol!
+>
 > Please set the following:
 > **X1 = 0x1337**
 
