@@ -85,14 +85,6 @@ label = "Blog"
 href = "/blog"
 
 [[config.topNav.links]]
-label = "Projects"
-href = "/projects"
-
-[[config.topNav.links]]
-label = "Vibe"
-href = "/vibe"
-
-[[config.topNav.links]]
 label = "About"
 href = "/about"
 
@@ -101,24 +93,17 @@ layout = "grid"
 
 [config.home.quote]
 text = [
-  "Navigate your world,",
-  "Showcase your story,",
-  "and keep everything in one place.",
+  
 ]
-image = "/images/logo-with-name.png"
+image = ""
 
 [config.home.intro]
-title = "here is navfolio"
-name = "navfolio"
+title = "welcome to my blog"
+name = "blog"
 body = [
-  "The name combines \"Navigation\" and \"Portfolio\".",
-  "Navfolio prioritizes lightweight organization, seamless reading, and developer-friendly aesthetics.",
-  "It’s less a resume than a personal OS for your ideas, projects, notes, and online presence.",
-  "这个名字融合了“导航”与“作品集”。",
-  "Navfolio 专注于轻量级组织、流畅的阅读体验，以及对开发者友好的美学设计。",
-  "它不像一份简历，更像是一个属于你自己的个人操作系统——承载想法、项目、笔记与网络足迹。",
+  
 ]
-image = "/images/logo-cat.png"
+image = ""
 
 [config.home.latest]
 count = 1
@@ -129,28 +114,22 @@ startDate = ""
 dateArchiveBaseHref = ""
 
 [[config.home.navigation]]
-icon = "compass"
-title = "Portfolio"
-subtitle = "Selected work and case studies"
-href = "https://astro.navfolio.site/"
-
-[[config.home.navigation]]
 icon = "pen"
 title = "Blog"
-subtitle = "Essays, notes, and field reports"
+subtitle = "Blogs"
 href = "/blog"
 
 [[config.home.navigation]]
 icon = "briefcase"
-title = "Resume"
-subtitle = "Career profile and experience"
-href = "https://github.com/dodolalorc/navfolio"
+title = "About"
+subtitle = "About myself"
+href = "/about"
 
 [[config.home.navigation]]
 icon = "github"
-title = "Open Source"
-subtitle = "Code, experiments, and tools"
-href = "https://github.com/dodolalorc/astro-navfolio"
+title = "My github"
+subtitle = ""
+href = "https://github.com/k1w106"
 
 [[config.home.connect]]
 label = "GitHub"
