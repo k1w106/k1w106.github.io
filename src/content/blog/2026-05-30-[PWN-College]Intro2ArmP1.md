@@ -4,7 +4,7 @@ description: ''
 date: '2026-05-30T15:57:14.089Z'
 draft: false
 showHeroImage: false
-tags: [assembly, XNU]
+tags: [assembly]
 categories: []
 series: []
 comments: true
@@ -14,7 +14,9 @@ sidebar:
   relatedPosts: true
 ---
 
-# Level 1
+# [PWN College] Intro-to-Arm-Part-1
+
+## Level 1
 
 > Similar to amd64, the mov instruction can be used. However, literal values must be prefixed with the # symbol!
 >
@@ -41,7 +43,7 @@ with process('/challenge/run') as p:
 
 `pwn.college{EUwvpgfk0I9Ixe9UYQDLLLtccQK.dlTM2MDL5QDMxczW}`
 
-# Level 2
+## Level 2
 
 > aarch64 registers are 64 bits in size, but the mov instruction only works with 16 bit immediate values.
 >
@@ -52,7 +54,6 @@ with process('/challenge/run') as p:
 > Example:
 >
 >         mov x0, #0x3700
->
 >         movk x0, #0x13, lsl 16
 >
 > Results in X0 containing the value 0x133700
