@@ -85,6 +85,14 @@ label = "Blog"
 href = "/blog"
 
 [[config.topNav.links]]
+label = "Projects"
+href = "/Projects"
+
+[[config.topNav.links]]
+label = "Vibe"
+href = "/Vibe"
+
+[[config.topNav.links]]
 label = "About"
 href = "/about"
 
@@ -93,17 +101,14 @@ layout = "grid"
 
 [config.home.quote]
 text = [
-  
+  "A simple student who are try to study about Apple ecosystem."
 ]
 image = ""
 
 [config.home.intro]
 title = "welcome to my blog"
 name = "blog"
-body = [
-  
-]
-image = ""
+
 
 [config.home.latest]
 count = 1
