@@ -1,8 +1,8 @@
 ---
-title: '[PWN College]Intro-to-Arm-Part-1'
+title: '[PWN College] Intro-to-Arm-Part-1'
 description: ''
 date: '2026-05-30T15:57:14.089Z'
-draft: true
+draft: false
 showHeroImage: false
 tags: [assembly, XNU]
 categories: []
