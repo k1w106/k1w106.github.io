@@ -57,6 +57,4 @@ with process('/challenge/run') as p:
 >
 > Results in X0 containing the value 0x133700
 >
-> Please set the following:
->
->         **X1 = 0xdeadbeef**
+> Please set the following: **X1 = 0xdeadbeef**
