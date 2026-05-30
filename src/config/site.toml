@@ -85,14 +85,6 @@ label = "Blog"
 href = "/blog"
 
 [[config.topNav.links]]
-label = "Projects"
-href = "/Projects"
-
-[[config.topNav.links]]
-label = "Vibe"
-href = "/Vibe"
-
-[[config.topNav.links]]
 label = "About"
 href = "/about"
 
@@ -101,7 +93,7 @@ layout = "grid"
 
 [config.home.quote]
 text = [
-  "A simple student who are try to study about Apple ecosystem."
+  "A simple student who are interested in XNU kernel exploitation."
 ]
 image = ""
 
@@ -138,14 +130,10 @@ title = "My github"
 subtitle = ""
 href = "https://github.com/k1w106"
 
-[[config.home.connect]]
-label = "GitHub"
-href = "https://github.com/dodolalorc/astro-navfolio"
-icon = "github"
 
 [[config.home.connect]]
 label = "Website"
-href = "https://astro.navfolio.site/"
+href = "https://k1w106.github.io/"
 icon = "compass"
 
 [[config.home.connect]]
@@ -160,25 +148,5 @@ icon = "repo"
 
 [[config.home.connect]]
 label = "Email"
-href = "mailto:hello@navfolio.site"
+href = ""
 icon = "mail"
-
-[[config.home.doing]]
-text = "Shipping a personal dashboard template"
-mark = "01"
-
-[[config.home.doing]]
-text = "Writing reusable notes for future projects"
-mark = "02"
-
-[[config.home.doing]]
-text = "Improving static-site publishing workflow"
-mark = "03"
-
-[[config.home.doing]]
-text = "Collecting useful developer resources"
-mark = "04"
-
-[[config.home.doing]]
-text = "Exploring small open-source ideas"
-mark = "05"
