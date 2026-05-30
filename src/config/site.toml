@@ -84,10 +84,6 @@ href = "/"
 label = "Blog"
 href = "/blog"
 
-[[config.topNav.links]]
-label = "About"
-href = "/about"
-
 [config.home]
 layout = "grid"
 
@@ -117,12 +113,6 @@ icon = "pen"
 title = "Blog"
 subtitle = "Blogs"
 href = "/blog"
-
-[[config.home.navigation]]
-icon = "briefcase"
-title = "About"
-subtitle = "About myself"
-href = "/about"
 
 [[config.home.navigation]]
 icon = "github"

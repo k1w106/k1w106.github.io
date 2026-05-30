@@ -19,7 +19,8 @@ sidebar:
 > Similar to amd64, the mov instruction can be used. However, literal values must be prefixed with the # symbol!
 >
 > Please set the following:
-> **X1 = 0x1337**
+>
+>         **X1 = 0x1337**
 
 It is the same as amd64 syntax, but the name of register is not the same.
 
@@ -41,3 +42,23 @@ with process('/challenge/run') as p:
 ```
 
 `pwn.college{EUwvpgfk0I9Ixe9UYQDLLLtccQK.dlTM2MDL5QDMxczW}`
+
+# Level 2
+
+> aarch64 registers are 64 bits in size, but the mov instruction only works with 16 bit immediate values.
+>
+> In order to move larger literal values, the mov and movk instructions are needed.
+>
+> movk loads a value into the destination register with a specific bitshift, retaining all other bytes
+>
+> Example:
+>
+>         mov x0, #0x3700
+>
+>         movk x0, #0x13, lsl 16
+>
+> Results in X0 containing the value 0x133700
+>
+> Please set the following:
+>
+>         **X1 = 0xdeadbeef**
