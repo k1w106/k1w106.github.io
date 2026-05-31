@@ -4,9 +4,9 @@ description: ''
 date: '2026-05-30T15:57:14.089Z'
 draft: false
 showHeroImage: false
-tags: [assembly]
-categories: []
-series: []
+tags: [assembly, pwn-college]
+categories: [assembly]
+series: [pwn-college]
 comments: true
 sidebar:
   enable: true
