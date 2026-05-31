@@ -517,7 +517,8 @@ const hasSidebar = shouldRenderSidebar && hasToc;
 
   @media (min-width: 1181px) {
     .blog-layout {
-      --layout-shell-width: 1320px;
+      --layout-shell-width: 1500px;
+      padding-right: max(var(--layout-page-gutter), calc(min(100%, 1500px) / 2 - 450px));
     }
   }
 
