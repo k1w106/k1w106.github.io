@@ -139,6 +139,15 @@ const hasSidebar = shouldRenderSidebar && hasToc;
     <div class="blog-background" aria-hidden="true"></div>
 
     <main class:list={['blog-layout', { 'blog-layout-centered': !hasSidebar }]} data-pagefind-body>
+      {
+        hasSidebar && (
+          <aside class="left-sidebar" aria-label="Reading tools">
+            <div class="left-sidebar-inner">
+              {hasToc && <TableOfContents items={tocItems} font={contentFont} />}
+            </div>
+          </aside>
+        )
+      }
       <div class="article-column">
         <article class="article-card">
           <ArticleHeader
@@ -199,16 +208,6 @@ const hasSidebar = shouldRenderSidebar && hasToc;
         {hasRelatedPosts && <RelatedPosts posts={relatedPosts} class="article-after-related" />}
         {isBlogPost && <CommentSection frontmatter={post.data} pathname={Astro.url.pathname} />}
       </div>
-
-      {
-        hasSidebar && (
-          <aside class="right-sidebar" aria-label="Reading tools">
-            <div class="right-sidebar-inner">
-              {hasToc && <TableOfContents items={tocItems} font={contentFont} />}
-            </div>
-          </aside>
-        )
-      }
     </main>
   </body>
 </html>
@@ -246,7 +245,7 @@ const hasSidebar = shouldRenderSidebar && hasToc;
     position: relative;
     z-index: 1;
     display: grid;
-    grid-template-columns: 1fr 252px;
+    grid-template-columns: 252px 1fr;
     gap: 48px;
     width: min(100%, var(--layout-shell-width));
     max-width: none;
@@ -276,10 +275,17 @@ const hasSidebar = shouldRenderSidebar && hasToc;
     max-width: none;
   }
 
-  .right-sidebar-inner {
+  .left-sidebar-inner {
     display: grid;
     gap: 18px;
     align-content: start;
+  }
+
+  :global(.blog-card) {
+    border: 1px solid var(--paper-line);
+    border-radius: 8px;
+    background: var(--paper-surface);
+    box-shadow: var(--paper-shadow);
   }
 
   :global(.article-after-related) {
@@ -305,7 +311,7 @@ const hasSidebar = shouldRenderSidebar && hasToc;
     background: var(--paper-control);
   }
 
-  .right-sidebar-inner {
+  .left-sidebar-inner {
     position: sticky;
     top: 96px;
     align-self: start;
@@ -510,14 +516,13 @@ const hasSidebar = shouldRenderSidebar && hasToc;
 
   @media (min-width: 1181px) {
     .blog-layout {
-      --layout-shell-width: 1400px;
-      padding-left: calc((min(100%, 1400px) - 900px) / 2 + 18px);
+      --layout-shell-width: 1320px;
     }
   }
 
   @media (max-width: 1180px) {
     .blog-layout {
-      grid-template-columns: 1fr 238px;
+      grid-template-columns: 238px 1fr;
       width: min(100%, 1100px);
     }
 
@@ -534,7 +539,7 @@ const hasSidebar = shouldRenderSidebar && hasToc;
       padding: 88px 16px 36px;
     }
 
-    .right-sidebar {
+    .left-sidebar {
       display: none;
     }
 
