@@ -43,7 +43,12 @@ const listId = collapsible ? 'mobile-article-toc-list' : undefined;
       <ol id={listId}>
         {normalizedItems.map((item, index) => (
           <li>
-            <a href={item.href} data-toc-link data-toc-hash={item.normalizedHref}>
+            <a
+              href={item.href}
+              data-toc-link
+              data-toc-hash={item.normalizedHref}
+              title={item.label}
+            >
               <span>{index + 1}</span>
               {item.label}
             </a>
@@ -163,6 +168,9 @@ const listId = collapsible ? 'mobile-article-toc-list' : undefined;
     font-size: 0.86rem;
     line-height: 1.35;
     text-decoration: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     transition:
       background-color 160ms ease,
       color 160ms ease;

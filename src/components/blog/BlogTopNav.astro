@@ -166,7 +166,13 @@ const shouldShowTocAction = showTocIcon && tocItems.length > 0;
         <ol>
           {tocItems.map((item, index) => (
             <li>
-              <a href={item.href} data-nav-toc-link data-toc-link data-toc-hash={item.href}>
+              <a
+                href={item.href}
+                data-nav-toc-link
+                data-toc-link
+                data-toc-hash={item.href}
+                title={item.label}
+              >
                 <span>{index + 1}</span>
                 {item.label}
               </a>
@@ -617,6 +623,9 @@ const shouldShowTocAction = showTocIcon && tocItems.length > 0;
       color: var(--paper-ink-soft);
       font-size: 0.86rem;
       line-height: 1.35;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     .mobile-toc-panel a:hover,

@@ -61,7 +61,7 @@ with process('/challenge/run') as p:
 > Please set the following: **X1 = 0xdeadbeef**
 
 The mov instruction in ARM allows for 2 bytes imediate values, in order to move larger values into a single register, we need to use the movk instruction to load the remaining bytes.  
-The movk instruction allows us to specify a bitshift, in this case we use 16 bit left shift for the 0xdead value.
+The movk instruction allows us to specify a bitshift, in this case we use 16 bit left shift for the `0xdead` value.
 
 ```python
 #!/usr/bin/env python3
