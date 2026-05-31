@@ -246,8 +246,8 @@ const hasSidebar = shouldRenderSidebar && hasToc;
     position: relative;
     z-index: 1;
     display: grid;
-    grid-template-columns: minmax(0, 860px) 252px;
-    gap: 56px;
+    grid-template-columns: 1fr 252px;
+    gap: 48px;
     width: min(100%, var(--layout-shell-width));
     max-width: none;
     margin: 0 auto;
@@ -319,7 +319,7 @@ const hasSidebar = shouldRenderSidebar && hasToc;
   }
 
   .article-card {
-    --article-content-max: 820px;
+    --article-content-max: 880px;
     overflow: visible;
     padding: 0;
     border: 0;
@@ -510,20 +510,14 @@ const hasSidebar = shouldRenderSidebar && hasToc;
 
   @media (min-width: 1181px) {
     .blog-layout {
-      --blog-shell-width: 1400px;
-      width: min(100%, var(--blog-shell-width));
-      padding-left: calc((min(100%, var(--blog-shell-width)) - 1000px) / 2);
-      padding-right: var(--layout-page-gutter);
-      padding-top: var(--layout-page-top);
-      padding-bottom: var(--layout-page-bottom);
-      margin: 0 auto;
+      --layout-shell-width: 1400px;
+      padding-left: calc((min(100%, 1400px) - 900px) / 2 + 18px);
     }
   }
 
   @media (max-width: 1180px) {
     .blog-layout {
-      grid-template-columns: minmax(0, 800px) 238px;
-      justify-content: center;
+      grid-template-columns: 1fr 238px;
       width: min(100%, 1100px);
     }
 
