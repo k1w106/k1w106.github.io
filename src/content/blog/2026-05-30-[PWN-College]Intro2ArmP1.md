@@ -60,7 +60,7 @@ with process('/challenge/run') as p:
 >
 > Please set the following: **X1 = 0xdeadbeef**
 
-The mov instruction in ARM allows for 2 bytes imediate values, in order to move larger values into a single register, we need to use the movk instruction to load the remaining bytes.  
+The mov instruction in ARM allows for 2 bytes immediate values, in order to move larger values into a single register, we need to use the movk instruction to load the remaining bytes.  
 The movk instruction allows us to specify a bitshift, in this case we use 16 bit left shift for the `0xdead` value.
 
 ```python
@@ -100,9 +100,10 @@ with process('/challenge/run') as p:
 > Place the value into X0 given the above.
 >
 > We will now set the following in preparation for your code:
-> X0 = 0xe29
-> X1 = 0x1081
-> X2 = 0x17f8
+>
+>         X0 = 0xe29
+>         X1 = 0x1081
+>         X2 = 0x17f8
 
 As the instruction shows, we need 3 arguments for the arithmetic.
 In this case, we first mul x0 with x1, then add x0 with x2, the result is stored in x0.

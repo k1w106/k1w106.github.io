@@ -246,8 +246,8 @@ const hasSidebar = shouldRenderSidebar && hasToc;
     position: relative;
     z-index: 1;
     display: grid;
-    grid-template-columns: minmax(0, 780px) 252px;
-    gap: 48px;
+    grid-template-columns: minmax(0, 860px) 252px;
+    gap: 56px;
     width: min(100%, var(--layout-shell-width));
     max-width: none;
     margin: 0 auto;
@@ -319,7 +319,7 @@ const hasSidebar = shouldRenderSidebar && hasToc;
   }
 
   .article-card {
-    --article-content-max: 720px;
+    --article-content-max: 820px;
     overflow: visible;
     padding: 0;
     border: 0;
@@ -510,9 +510,9 @@ const hasSidebar = shouldRenderSidebar && hasToc;
 
   @media (min-width: 1181px) {
     .blog-layout {
-      --blog-shell-width: 1324px;
+      --blog-shell-width: 1400px;
       width: min(100%, var(--blog-shell-width));
-      padding-left: calc((min(100%, var(--blog-shell-width)) - 900px) / 2);
+      padding-left: calc((min(100%, var(--blog-shell-width)) - 1000px) / 2);
       padding-right: var(--layout-page-gutter);
       padding-top: var(--layout-page-top);
       padding-bottom: var(--layout-page-bottom);
@@ -522,9 +522,9 @@ const hasSidebar = shouldRenderSidebar && hasToc;
 
   @media (max-width: 1180px) {
     .blog-layout {
-      grid-template-columns: minmax(0, 720px) 238px;
+      grid-template-columns: minmax(0, 800px) 238px;
       justify-content: center;
-      width: min(100%, 1040px);
+      width: min(100%, 1100px);
     }
 
     .blog-layout-centered {
