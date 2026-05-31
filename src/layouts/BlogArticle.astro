@@ -139,15 +139,6 @@ const hasSidebar = shouldRenderSidebar && hasToc;
     <div class="blog-background" aria-hidden="true"></div>
 
     <main class:list={['blog-layout', { 'blog-layout-centered': !hasSidebar }]} data-pagefind-body>
-      {
-        hasSidebar && (
-          <aside class="left-sidebar" aria-label="Reading tools">
-            <div class="left-sidebar-inner">
-              {hasToc && <TableOfContents items={tocItems} font={contentFont} />}
-            </div>
-          </aside>
-        )
-      }
       <div class="article-column">
         <article class="article-card">
           <ArticleHeader
@@ -208,6 +199,16 @@ const hasSidebar = shouldRenderSidebar && hasToc;
         {hasRelatedPosts && <RelatedPosts posts={relatedPosts} class="article-after-related" />}
         {isBlogPost && <CommentSection frontmatter={post.data} pathname={Astro.url.pathname} />}
       </div>
+
+      {
+        hasSidebar && (
+          <aside class="right-sidebar" aria-label="Reading tools">
+            <div class="right-sidebar-inner">
+              {hasToc && <TableOfContents items={tocItems} font={contentFont} />}
+            </div>
+          </aside>
+        )
+      }
     </main>
   </body>
 </html>
@@ -245,7 +246,7 @@ const hasSidebar = shouldRenderSidebar && hasToc;
     position: relative;
     z-index: 1;
     display: grid;
-    grid-template-columns: 252px 1fr;
+    grid-template-columns: 1fr 252px;
     gap: 48px;
     width: min(100%, var(--layout-shell-width));
     max-width: none;
@@ -275,7 +276,7 @@ const hasSidebar = shouldRenderSidebar && hasToc;
     max-width: none;
   }
 
-  .left-sidebar-inner {
+  .right-sidebar-inner {
     display: grid;
     gap: 18px;
     align-content: start;
@@ -311,7 +312,7 @@ const hasSidebar = shouldRenderSidebar && hasToc;
     background: var(--paper-control);
   }
 
-  .left-sidebar-inner {
+  .right-sidebar-inner {
     position: sticky;
     top: 96px;
     align-self: start;
@@ -522,7 +523,7 @@ const hasSidebar = shouldRenderSidebar && hasToc;
 
   @media (max-width: 1180px) {
     .blog-layout {
-      grid-template-columns: 238px 1fr;
+      grid-template-columns: 1fr 238px;
       width: min(100%, 1100px);
     }
 
@@ -539,7 +540,7 @@ const hasSidebar = shouldRenderSidebar && hasToc;
       padding: 88px 16px 36px;
     }
 
-    .left-sidebar {
+    .right-sidebar {
       display: none;
     }
 
