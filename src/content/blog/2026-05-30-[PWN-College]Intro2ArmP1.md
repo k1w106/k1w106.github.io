@@ -167,8 +167,7 @@ with process('/challenge/run') as p:
 
 > Modulo in aarch64 cannot be done in a single instruction!
 >
-> Please compute the following:
-> X0 % X1
+> Please compute the following: `X0 % X1`
 >
 > Place the value in X0.
 >
@@ -179,8 +178,8 @@ with process('/challenge/run') as p:
 > Constraints: You may submit 2 instructions.
 
 To make a module operation with only 2 instructions, we need to use `udiv` and `msub`
-'udiv' will perform xn / xm, `udiv` returns unsigned value.
-'msub x1, x2, x3, x4' will perform x1=(x2\*x3)-x4 for example
+`udiv` will perform xn / xm and return unsigned value.
+`msub x1, x2, x3, x4` will perform `x1=(x2\*x3)-x4` for example
 Multiply the divisor by the quotient and subtract the result from the dividend.
 
 ```python
@@ -205,7 +204,7 @@ with process('/challenge/run') as p:
 
 > Shifting in assembly is another interesting concept! aarch64 allows you to 'shift' bits around in a register. Take for instance, X1. For the sake of this example
 >
-> say X1 only can store 8 bits (it normally stores 64). The value in X1 is: X1 = 10001010
+> say X1 only can store 8 bits (it normally stores 64). The value in X1 is: `X1 = 10001010`
 >
 > We if we shift the value once to the left: `lsl X1, X1, 1`
 >
@@ -235,7 +234,6 @@ with process('/challenge/run') as p:
 > We will now set the following in preparation for your code:
 > X0 = 0x8afa1c2514ec5519
 
-x0 stores 8 bytes = 64 bits
 Shift left 32 bits to make x0: `| B3 | B2 | B1 | B0 | 0x0 | 0x0 | 0x0 | 0x0 |`
 Then shift right 65 bits to clear B2-B0: `| 0x0 | 0x0 | 0x0 | 0x0 |0x0 | 0x0 | 0x0 | B3 |`
 
@@ -340,7 +338,6 @@ with process('/challenge/run') as p:
 >         [0x404008] = 0x13c798
 
 ldp loads `x0` and `x0+0x8` consecutively and stores in x1, x2
-Same as stp
 
 ```python
 from pwn import *
@@ -536,19 +533,19 @@ with process('/challenge/run') as p:
 >
 > We will now set the following in preparation for your code:
 >
->         - [0x4042a0:0x4044c8] = {n qwords}
->         - X0 = 0x4042a0
->         - X1 = 69
+> - [0x4042a0:0x4044c8] = {n qwords}
+> - X0 = 0x4042a0
+> - X1 = 69
 >
 > Constraints:
 >
->         - You are allowed six instructions
+> - You are allowed six instructions
 >
 > Hints:
 >
->         - Take advantage of pre/post indexing when possible.
->         - Use values where they are.
->         - Don't forget to place the result in x0.
+> - Take advantage of pre/post indexing when possible.
+> - Use values where they are.
+> - Don't forget to place the result in x0.
 
 Fortunately, the solution is the same as level 11
 
@@ -589,8 +586,8 @@ with process('/challenge/run') as p:
 >
 > We will now set the following in preparation for your code:
 >
->         - Loading your given gode at: 0x4000cf
->         - (stack) [0x7fffff1ffff8] = 0xdd
+> - Loading your given gode at: 0x4000cf
+> - (stack) [0x7fffff1ffff8] = 0xdd
 
 First we have to make a relative jump of 0x40 bytes = 64 bytes
 In aarch64, it takes 4 bytes per instruction so we have to add 16 instruction (including the relative jump) to reach 0x40 bytes
@@ -642,8 +639,8 @@ with process('/challenge/run') as p:
 >
 > The bl instruction:
 >
->         - does a PC relative jump the specified location
->         - and stores the return address in the link register lr (aka x30)
+> - does a PC relative jump the specified location
+> - and stores the return address in the link register lr (aka x30)
 >
 > It is the caller's responsibility to store the existing lr value frame pointer and any needed values in x0 - x15.
 >
@@ -717,8 +714,8 @@ with process('/challenge/run') as p:
 >
 > The bl instruction:
 >
->         - does a PC relative jump the specified location
->         - and stores the return address in the link register lr (aka x30)
+> - does a PC relative jump the specified location
+> - and stores the return address in the link register lr (aka x30)
 >
 > It is the caller's responsibility to store the existing lr value frame pointer and any needed values in x0 - x15.
 >
