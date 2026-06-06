@@ -19,7 +19,7 @@ sidebar:
 ## Level 1
 
 > For this level, just send any message to this port.
-
+>
 > `mach_port_allocate()` created port right name 2563
 >
 > `mach_port_insert_right()` inserted a send right
@@ -94,14 +94,14 @@ int main(){
 ## Level 3
 
 > Now, send a specific inline message to this port.
-
+>
 > `mach_port_allocate()` created port right name 5123
 >
 > `mach_port_insert_right()` inserted a send right
 >
 > `bootstrap_register()` to college.pwn.mac-ports.8d
 
-The msg header does not contain `value` field in default so we should create the own mach_msg struct that contians `value` field
+The msg header does not contain `value` field in default so we should create the own mach_msg struct that contains `value` field
 
 ```c
 typedef struct {
