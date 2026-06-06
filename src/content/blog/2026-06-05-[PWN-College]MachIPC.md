@@ -1,5 +1,5 @@
 ---
-title: '2026 06 05 [PWN College]MachIPC'
+title: '[PWN College] Mach IPC'
 description: ''
 date: '2026-06-05T07:04:46.150Z'
 draft: false
