@@ -1,5 +1,5 @@
 ---
-title: '[PWN College] Introduction-to-ARM-Part-1'
+title: '[PWN College] Introduction-to-ARM'
 description: ''
 date: '2026-05-30T15:57:14.089Z'
 draft: false
@@ -14,7 +14,7 @@ sidebar:
   relatedPosts: true
 ---
 
-# Introduction to ARM Part 1
+# Introduction to ARM
 
 ## Level 1
 
