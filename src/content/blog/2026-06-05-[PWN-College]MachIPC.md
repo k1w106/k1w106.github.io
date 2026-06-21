@@ -170,3 +170,121 @@ int main(){
     // pwn.college{A9PXd6YbcK1CUa8fdAHGRXhqLKr.dVTO2kDL5QDMxczW}
 }
 ```
+
+## Level 4
+
+The solution is similar to the previous challenge.
+
+```c
+#include <stdio.h>
+#include <mach/mach.h>
+#include <servers/bootstrap.h>
+typedef struct{
+    mach_msg_header_t header;
+    uint64_t value;
+} my_msg_t;
+int main(){
+    mach_port_t bootstrap_port, server_port;
+    kern_return_t kr;
+    kr = task_get_bootstrap_port(mach_task_self(), &bootstrap_port);
+    if(kr != KERN_SUCCESS){
+        printf("bootstrap port fail");
+        return 1;
+    }
+    kr = bootstrap_look_up(bootstrap_port, "college.pwn.mac-ports.1f", &server_port);
+    if(kr != KERN_SUCCESS){
+        printf("look up fail");
+        return 1;
+    }
+    my_msg_t msg = {0};
+    msg.header.msgh_bits = MACH_MSGH_BITS(MACH_MSG_TYPE_COPY_SEND, 0);
+    msg.header.msgh_remote_port = server_port;
+    msg.header.msgh_size = sizeof(msg);
+    msg.value = 0x502ced1908d4871f;
+
+    kr = mach_msg(&msg, MACH_SEND_MSG, sizeof(msg), 0, MACH_PORT_NULL, 0, MACH_PORT_NULL);
+    printf("Sending...");
+    return 0;
+    // pwn.college{UJuL_N_mSq2xQlYVxzDH0UbtFbE.dZTO2kDL5QDMxczW}
+}
+```
+
+## Level 5
+
+> Now, send any OOL message to this port.
+
+> mach_port_allocate() created port right name 5123
+>
+> mach_port_insert_right() inserted a send right
+>
+> bootstrap_register() to college.pwn.mac-ports.18
+
+Unlike `Inline message` used in previous levels, `OOL message (Out of line message)` has different format and how it works.
+`Inline message` manually copies data in the extra field that we provide into the buffer. This is not effective if it is a 10MB data and there are multiples sender, that means the kernel have to manually copies large bytes.
+`Out of line message (OOL)` solves this problem. It locates the address of the buffer instead of directly store the buffer, making this message dynamic and optimize.
+OOL Message descriptor is where all the body information of the message:
+
+```c
+typedef struct{
+  void* address;
+#if !defined(__LP64__)
+  mach_msg_size_t size;
+#endif
+  boolean_t deallocate: 8;
+  mach_msg_copy_options_t copy: 8;
+  unsigned int pad1: 8;
+  mach_msg_descriptor_type_t type: 8;
+#if defined(__LP64__)
+  mach_msg_size_t size;
+#endif
+} mach_msg_ool_descriptor_t;
+```
+
+- `address` of the out-of-line data
+- `size` of the data
+- `deallocate`, when true the memory page at the address will be removed from the sender’s address space once the message’s been sent
+- `copy` defines the way of copying the memory
+- `type` of the message descriptor, for the OOL descriptor, it’s MACH_MSG_OOL_DESCRIPTOR
+
+```c
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <mach/mach.h>
+#include <servers/bootstrap.h>
+typedef struct {
+    mach_msg_header_t header;
+    mach_msg_size_t msgh_descriptor_count;
+    mach_msg_ool_descriptor_t descriptor;
+} OOLMessage;
+int main(){
+    mach_port_t bootstrap_port, server_port;
+    kern_return_t kr;
+    kr = task_get_bootstrap_port(mach_task_self(), &bootstrap_port);
+    if(kr != KERN_SUCCESS){
+        printf("bootstrap port fail");
+        return 1;
+    }
+    kr = bootstrap_look_up(bootstrap_port, "college.pwn.mac-ports.18", &server_port);
+    if(kr != KERN_SUCCESS){
+        printf("look up fail");
+        return 1;
+    }
+    // OOL message
+    char* buffer = malloc(0x50);
+    strcpy(buffer, "aaaa");
+    OOLMessage msg = {0};
+    msg.header.msgh_bits = MACH_MSGH_BITS_COMPLEX | MACH_MSGH_BITS(MACH_MSG_TYPE_COPY_SEND, 0);
+    msg.header.msgh_remote_port = server_port;
+    msg.header.msgh_size = sizeof(msg);
+    msg.msgh_descriptor_count = 1;
+    msg.descriptor.address = buffer;
+    msg.descriptor.size = 0x50;
+    msg.descriptor.deallocate = false;
+    msg.descriptor.copy = MACH_MSG_VIRTUAL_COPY;
+    msg.descriptor.type = MACH_MSG_OOL_DESCRIPTOR;
+    kr = mach_msg(&msg.header, MACH_SEND_MSG, sizeof(msg), 0, MACH_PORT_NULL, 0, MACH_PORT_NULL);
+    printf("Sending...");
+    // pwn.college{4zNZo7EL7iGfYcDFk667dJxm9-5.ddTO2kDL5QDMxczW}}
+}
+```
