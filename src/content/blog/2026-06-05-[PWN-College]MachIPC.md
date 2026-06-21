@@ -277,10 +277,13 @@ int main(){
     char* buffer = malloc(0x50);
     strcpy(buffer, "aaaa");
     OOLMessage msg = {0};
+    // Have to turn on COMPLEX bit to let the kernel know how to transfer data, otherwise it will transfer descriptor RAW bytes.
     msg.header.msgh_bits = MACH_MSGH_BITS_COMPLEX | MACH_MSGH_BITS(MACH_MSG_TYPE_COPY_SEND, 0);
     msg.header.msgh_remote_port = server_port;
     msg.header.msgh_size = sizeof(msg);
+    // amount of descriptor
     msg.msgh_descriptor_count = 1;
+    // Body of the message, contains descriptor
     msg.descriptor.address = buffer;
     msg.descriptor.size = 0x50;
     msg.descriptor.deallocate = false;
