@@ -221,7 +221,7 @@ int main(){
 
 Unlike `Inline message` used in previous levels, `OOL message (Out of line message)` has different format and how it works.
 
-`Inline message` manually copies data in the extra field that we provide into the buffer. This is not effective if it is a 10MB data and there are multiples sender, that means the kernel have to manually copies large bytes.
+`Inline message` manually copies data in the extra field that we provide into the buffer. This is not effective if it is a 10MB data for example and there are multiple senders, that means the kernel have to manually copies large amount of bytes.
 
 `Out of line message (OOL)` solves this problem. It locates the address of the buffer instead of directly store the buffer, making this message dynamic and optimize.
 
