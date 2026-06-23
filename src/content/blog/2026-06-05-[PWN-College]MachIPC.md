@@ -294,3 +294,151 @@ int main(){
     // pwn.college{4zNZo7EL7iGfYcDFk667dJxm9-5.ddTO2kDL5QDMxczW}}
 }
 ```
+
+## Level 6
+
+Just use `lldb` to find the right service.
+
+```c
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <mach/mach.h>
+#include <servers/bootstrap.h>
+
+typedef struct{
+    mach_msg_header_t header;
+    mach_msg_size_t msgh_descriptor_count;
+    mach_msg_ool_descriptor_t descriptor;
+} OOLMessage;
+
+int main(){
+    mach_port_t bootstrap_port, server_port;
+    kern_return_t kr;
+    kr = task_get_bootstrap_port(mach_task_self(), &bootstrap_port);
+    if(kr != KERN_SUCCESS){
+        printf("bootstrap port fail");
+        return 1;
+    }
+    kr = bootstrap_look_up(bootstrap_port, "college.pwn.mac-ports.43", &server_port);
+    if(kr != KERN_SUCCESS){
+        printf("lookup fail");
+        return 1;
+    }
+    char* buffer = malloc(0x50);
+    strcpy(buffer, "aaaa");
+    OOLMessage msg = {0};
+    msg.header.msgh_bits = MACH_MSGH_BITS_COMPLEX | MACH_MSGH_BITS(MACH_MSG_TYPE_COPY_SEND, 0);
+    msg.header.msgh_remote_port = server_port;
+    msg.header.msgh_size = sizeof(msg);
+    msg.msgh_descriptor_count = 1;
+    msg.descriptor.address = buffer;
+    msg.descriptor.size = 0x50;
+    msg.descriptor.deallocate = false;
+    msg.descriptor.copy = MACH_MSG_VIRTUAL_COPY;
+    msg.descriptor.type = MACH_MSG_OOL_DESCRIPTOR;
+    kr = mach_msg(&msg.header, MACH_SEND_MSG, sizeof(msg), 0, MACH_PORT_NULL, 0, MACH_PORT_NULL);
+    return 0;
+    // pwn.college{o1UIpjCd_OTwDoDkevqCf4TYiR0.dhTO2kDL5QDMxczW}
+}
+```
+
+## Level 7
+
+> Now, send an OOL message with a specific value to this port.
+>
+> mach_port_allocate() created port right name 2307
+>
+> mach_port_insert_right() inserted a send right
+>
+> bootstrap_register() to college.pwn.mac-ports.e6
+
+Assign the allocated memmory to the specific value
+
+```c
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <mach/mach.h>
+#include <servers/bootstrap.h>
+typedef struct {
+    mach_msg_header_t header;
+    mach_msg_size_t msgh_descriptor_count;
+    mach_msg_ool_descriptor_t descriptor;
+} OOLMessage;
+int main(){
+    mach_port_t bootstrap_port, server_port;
+    kern_return_t kr;
+    kr = task_get_bootstrap_port(mach_task_self(), &bootstrap_port);
+    if(kr != KERN_SUCCESS){
+        printf("bootstrap port fail");
+        return 1;
+    }
+    kr = bootstrap_look_up(bootstrap_port, "college.pwn.mac-ports.e6", &server_port);
+    if(kr != KERN_SUCCESS){
+        printf("look up fail");
+        return 1;
+    }
+    // OOL message
+    uint64_t* buffer = malloc(0x8);
+    *buffer = 0x3784345a8cced079;
+    OOLMessage msg = {0};
+    msg.header.msgh_bits = MACH_MSGH_BITS_COMPLEX | MACH_MSGH_BITS(MACH_MSG_TYPE_COPY_SEND, 0);
+    msg.header.msgh_remote_port = server_port;
+    msg.header.msgh_size = sizeof(msg);
+    msg.msgh_descriptor_count = 1;
+    msg.descriptor.address = buffer;
+    msg.descriptor.size = 0x8;
+    msg.descriptor.deallocate = false;
+    msg.descriptor.copy = MACH_MSG_VIRTUAL_COPY;
+    msg.descriptor.type = MACH_MSG_OOL_DESCRIPTOR;
+    kr = mach_msg(&msg.header, MACH_SEND_MSG, sizeof(msg), 0, MACH_PORT_NULL, 0, MACH_PORT_NULL);
+    printf("Sending...");
+    // pwn.college{YjWxRlQbrdSA79c3xUlgybwx8pZ.dlTO2kDL5QDMxczW}
+}
+```
+
+## Level 8
+
+```c
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <mach/mach.h>
+#include <servers/bootstrap.h>
+typedef struct {
+    mach_msg_header_t header;
+    mach_msg_size_t msgh_descriptor_count;
+    mach_msg_ool_descriptor_t descriptor;
+} OOLMessage;
+int main(){
+    mach_port_t bootstrap_port, server_port;
+    kern_return_t kr;
+    kr = task_get_bootstrap_port(mach_task_self(), &bootstrap_port);
+    if(kr != KERN_SUCCESS){
+        printf("bootstrap port fail");
+        return 1;
+    }
+    kr = bootstrap_look_up(bootstrap_port, "college.pwn.mac-ports.ae", &server_port);
+    if(kr != KERN_SUCCESS){
+        printf("look up fail");
+        return 1;
+    }
+    // OOL message
+    uint64_t* buffer = malloc(0x8);
+    *buffer = 0xbd858ef1c2d50dd1;
+    OOLMessage msg = {0};
+    msg.header.msgh_bits = MACH_MSGH_BITS_COMPLEX | MACH_MSGH_BITS(MACH_MSG_TYPE_COPY_SEND, 0);
+    msg.header.msgh_remote_port = server_port;
+    msg.header.msgh_size = sizeof(msg);
+    msg.msgh_descriptor_count = 1;
+    msg.descriptor.address = buffer;
+    msg.descriptor.size = 0x8;
+    msg.descriptor.deallocate = false;
+    msg.descriptor.copy = MACH_MSG_VIRTUAL_COPY;
+    msg.descriptor.type = MACH_MSG_OOL_DESCRIPTOR;
+    kr = mach_msg(&msg.header, MACH_SEND_MSG, sizeof(msg), 0, MACH_PORT_NULL, 0, MACH_PORT_NULL);
+    printf("Sending...");
+    // pwn.college{8BMTTkWWorW4G_QMDTly6uEuk5T.dBDM3kDL5QDMxczW}
+}
+```
