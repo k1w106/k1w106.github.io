@@ -67,7 +67,7 @@ comment = true
 [config.profile]
 name = "k1w1"
 handle = "@VNUHCM - University of Information Technology Student"
-role = "A XNU kernel learner"
+role = "Kernel learner"
 company = ""
 location = ""
 email = "huynhnhatduy34@gmail.com"
@@ -88,9 +88,7 @@ href = "/blog"
 layout = "grid"
 
 [config.home.quote]
-text = [
-  "An ordinary student interested in XNU kernel exploitation."
-]
+text = [""]
 image = ""
 
 [config.home.intro]
