@@ -1,39 +1,24 @@
-// @ts-check
-
-import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
+import mdx from '@astrojs/mdx';
+import { SITE_URL } from './src/lib/site.ts';
 
 import tailwindcss from '@tailwindcss/vite';
 
-import expressiveCode from 'astro-expressive-code';
+// The deploy workflow sets these for GitHub Pages project pages (https://<owner>.github.io/<repo>/).
+const BASE_PATH = process.env.BASE_PATH || undefined;
 
-const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
-const customSite = process.env.SITE_URL;
-const customBase = process.env.SITE_BASE;
-const repositoryOwner = process.env.GITHUB_REPOSITORY_OWNER;
-const repositoryName = process.env.GITHUB_REPOSITORY?.split('/')[1];
-const isProjectPage =
-  Boolean(repositoryOwner) &&
-  Boolean(repositoryName) &&
-  repositoryName !== `${repositoryOwner}.github.io`;
-
-const githubPagesSite =
-  repositoryOwner && repositoryName
-    ? `https://${repositoryOwner}.github.io${isProjectPage ? `/${repositoryName}` : ''}`
-    : undefined;
-
-const resolvedSite =
-  customSite || (isGitHubActions && githubPagesSite ? githubPagesSite : 'https://example.com');
-
-const resolvedBase =
-  customBase || (isGitHubActions && isProjectPage && repositoryName ? `/${repositoryName}` : '/');
-
-// https://astro.build/config
 export default defineConfig({
-  site: resolvedSite,
-  base: resolvedBase,
-  integrations: [expressiveCode(), mdx(), sitemap()],
+  site: process.env.SITE_URL || SITE_URL,
+  base: BASE_PATH,
+
+  compressHTML: true,
+
+  markdown: {
+    shikiConfig: { theme: 'css-variables' },
+  },
+
+  integrations: [sitemap(), mdx()],
 
   vite: {
     plugins: [tailwindcss()],

@@ -1,6 +1,4 @@
-dist
-.astro
-node_modules
-bun.lock
-homepage.png
-public/favicon.ico
+dist/
+.astro/
+public/
+package-lock.json

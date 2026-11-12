@@ -1,20 +1,10 @@
 version: 2
 updates:
-  - package-ecosystem: 'bun'
+  - package-ecosystem: 'npm'
     directory: '/'
     schedule:
-      interval: 'weekly'
-    groups:
-      production-dependencies:
-        applies-to: 'version-updates'
-        patterns:
-          - '*'
-  - package-ecosystem: 'github-actions'
-    directory: '/'
-    schedule:
-      interval: 'weekly'
-    groups:
-      ci-dependencies:
-        applies-to: 'version-updates'
-        patterns:
-          - '*'
+      interval: 'monthly'
+    ignore:
+      - dependency-name: 'typescript'
+        versions:
+          - '>=7.0.0'
