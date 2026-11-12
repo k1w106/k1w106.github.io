@@ -50,9 +50,9 @@ const postSchema = JSON.stringify({
 >
   <script type="application/ld+json" is:inline set:html={postSchema}></script>
   <main class="content-shell">
-    <div class="article-layout section">
-      <aside class="article-toc" aria-label="Article sections">
-        {sectionHeadings.length > 0 && (
+    <div class:list={['article-layout', 'section', { 'article-layout--no-toc': sectionHeadings.length === 0 }]}>
+      {sectionHeadings.length > 0 && (
+        <aside class="article-toc" aria-label="Article sections">
           <nav class="grid border-l-[3px] border-ink">
             {sectionHeadings.map((heading) => (
               <a href={`#${heading.slug}`} data-heading-link={heading.slug}>
@@ -60,8 +60,8 @@ const postSchema = JSON.stringify({
               </a>
             ))}
           </nav>
-        )}
-      </aside>
+        </aside>
+      )}
 
       <article class="min-w-0">
         <header class="mb-[2.35rem] border-b-4 border-ink pb-8">
@@ -157,6 +157,14 @@ const postSchema = JSON.stringify({
     @apply relative grid grid-cols-[minmax(8rem,12rem)_minmax(0,860px)] items-start gap-[clamp(2rem,6vw,4rem)] pt-16;
     @apply border-t-0;
     @apply max-[1040px]:block max-[1040px]:max-w-[860px] max-sm:pt-[2.25rem];
+  }
+
+  .article-layout:not(.article-layout--no-toc) > article {
+    @apply relative -left-8 max-[1040px]:left-0;
+  }
+
+  .article-layout--no-toc {
+    @apply grid-cols-[minmax(0,860px)] justify-center;
   }
 
   .article-toc {
