@@ -32,12 +32,12 @@ const { name, posts } = Astro.props;
 const slug = Astro.params.tag!;
 ---
 
-<Layout title={`#${name} — ${SITE_NAME}`} description={`Posts tagged "${name}".`} canonicalPath={`/tags/${slug}/`}>
+<Layout title={`#${name} - ${SITE_NAME}`} description={`Posts tagged "${name}".`} canonicalPath={`/tags/${slug}/`}>
   <main class="content-shell">
     <PageHero title={`# ${name}`}>
       <Lede>
         {posts.length === 0
-          ? 'Nothing here yet — check back soon.'
+          ? 'Nothing here yet - check back soon.'
           : `${posts.length} post${posts.length === 1 ? '' : 's'} tagged ${name}.`}{' '}
       </Lede>
     </PageHero>

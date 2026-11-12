@@ -1,10 +1,4 @@
-import {
-  BLOG_DESCRIPTION,
-  EXPERIENCE_DESCRIPTION,
-  PROJECTS_DESCRIPTION,
-  SITE_DESCRIPTION,
-  TAGS_DESCRIPTION,
-} from '@/lib/site';
+import { BLOG_DESCRIPTION, EXPERIENCE_DESCRIPTION, SITE_DESCRIPTION, TAGS_DESCRIPTION } from '@/lib/site';
 
 export type SearchEntry = {
   title: string;
@@ -40,14 +34,7 @@ export const PAGE_SEARCH_ENTRIES: SearchEntry[] = [
     title: 'Experience',
     description: EXPERIENCE_DESCRIPTION,
     tags: ['career', 'resume', 'work'],
-    body: "Lead Engineer at Acme Corp (January 2023 to present): leads a small team that maintains the company's flagship platform, from planning the roadmap to reviewing pull requests, and shipped a staged migration to a modern frontend stack with no downtime. Software Engineer at Globex Industries (June 2019 to December 2022): built and maintained REST APIs and internal tools, wrote tests first, and automated the release process. Junior Developer at Initech (July 2017 to May 2019): fixed bugs, wrote small features for a customer-facing web application, and documented onboarding for new teammates.",
+    body: "Lead Engineer at Acme Corp (January 2023 to present): leads a small team that maintains the company's flagship platform, from planning the roadmap to reviewing pull requests, and shipped a staged migration to a modern frontend stack with no downtime.",
     url: '/experience/',
-  },
-  {
-    title: 'Projects',
-    description: PROJECTS_DESCRIPTION,
-    tags: ['portfolio', 'open source', 'code'],
-    body: 'Example Project: a short description of what the project does, built with TypeScript, Astro, and Tailwind CSS. Another Project: a command-line tool that automates a repetitive task, built with Node.js. Side Project: a small experiment built to learn something new, with Python and SQLite. Each card links to its source on GitHub.',
-    url: '/projects/',
   },
 ];
