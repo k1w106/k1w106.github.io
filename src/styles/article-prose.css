@@ -17,6 +17,10 @@
   font-weight: 700;
 }
 
+.article-prose :is(h1, h2, h3)[id] {
+  scroll-margin-top: 7rem;
+}
+
 .article-prose h1 {
   margin: 2.3rem 0 1rem;
   font-size: clamp(2rem, 5vw, 3.5rem);

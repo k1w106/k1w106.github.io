@@ -23,7 +23,8 @@ export async function getStaticPaths() {
 
 const { post, slug } = Astro.props;
 const { Content, headings } = await render(post);
-const sectionHeadings = headings.filter((heading) => heading.depth === 2);
+const h2Headings = headings.filter((heading) => heading.depth === 2);
+const sectionHeadings = h2Headings.length > 0 ? h2Headings : headings.filter((heading) => heading.depth === 1);
 const tags = post.data.tags.filter((tag) => slugifyTag(tag) !== '');
 const articleProseClasses: string[] = ['article-prose', ...ANIMATED_UNDERLINE_CLASSES];
 
@@ -50,19 +51,7 @@ const postSchema = JSON.stringify({
 >
   <script type="application/ld+json" is:inline set:html={postSchema}></script>
   <main class="content-shell">
-    <div class:list={['article-layout', 'section', { 'article-layout--no-toc': sectionHeadings.length === 0 }]}>
-      {sectionHeadings.length > 0 && (
-        <aside class="article-toc" aria-label="Article sections">
-          <nav class="grid border-l-[3px] border-ink">
-            {sectionHeadings.map((heading) => (
-              <a href={`#${heading.slug}`} data-heading-link={heading.slug}>
-                {heading.text}
-              </a>
-            ))}
-          </nav>
-        </aside>
-      )}
-
+    <div class="article-layout section">
       <article class="min-w-0">
         <header class="mb-[2.35rem] border-b-4 border-ink pb-8">
           <p class="post-meta">
@@ -99,6 +88,35 @@ const postSchema = JSON.stringify({
               ))}
             </p>
           )}
+
+          {sectionHeadings.length > 0 && (
+            <div class="toc mt-6" data-toc data-open="false">
+              <button
+                type="button"
+                class="toc-toggle"
+                data-toc-toggle
+                aria-expanded="false"
+                aria-controls={`toc-panel-${slug}`}
+              >
+                <span>Table of contents</span>
+                <span class="toc-chevron" aria-hidden="true"></span>
+              </button>
+              <div id={`toc-panel-${slug}`} class="toc-panel" data-toc-panel inert aria-hidden="true">
+                <div class="toc-panel-inner">
+                  <nav class="toc-nav" aria-label="Table of contents">
+                    {sectionHeadings.map((heading) => (
+                      <a href={`#${heading.slug}`} data-heading-link={heading.slug}>
+                        <span class="toc-hash" aria-hidden="true">
+                          #
+                        </span>
+                        {heading.text}
+                      </a>
+                    ))}
+                  </nav>
+                </div>
+              </div>
+            </div>
+          )}
         </header>
         <div class:list={articleProseClasses}>
           <Content />
@@ -112,14 +130,18 @@ const postSchema = JSON.stringify({
 
     function initToc() {
       tocObserver?.disconnect();
-      const headings = Array.from(document.querySelectorAll('.article-prose h2[id]'));
       const links = new Map(
         Array.from(document.querySelectorAll('[data-heading-link]')).map((link) => [
           link.getAttribute('data-heading-link'),
           link,
         ]),
       );
-      if (headings.length === 0 || links.size === 0) return;
+      if (links.size === 0) return;
+
+      const headings = Array.from(
+        document.querySelectorAll<HTMLElement>('.article-prose h1[id], .article-prose h2[id]'),
+      ).filter((heading) => links.has(heading.id));
+      if (headings.length === 0) return;
 
       function setActive(id: string) {
         for (const link of links.values()) link.removeAttribute('aria-current');
@@ -139,8 +161,44 @@ const postSchema = JSON.stringify({
       for (const heading of headings) tocObserver.observe(heading);
     }
 
+    function initTocToggle() {
+      document.querySelectorAll<HTMLElement>('[data-toc]').forEach((toc) => {
+        if (toc.dataset.tocReady === 'true') return;
+        toc.dataset.tocReady = 'true';
+
+        const toggle = toc.querySelector('[data-toc-toggle]');
+        const panel = toc.querySelector<HTMLElement>('[data-toc-panel]');
+        if (!(toggle instanceof HTMLButtonElement) || !panel) return;
+
+        const setOpen = (open: boolean) => {
+          toc.dataset.open = String(open);
+          toggle.setAttribute('aria-expanded', String(open));
+          panel.toggleAttribute('inert', !open);
+          panel.setAttribute('aria-hidden', String(!open));
+        };
+
+        setOpen(false);
+        toggle.addEventListener('click', () => setOpen(toc.dataset.open !== 'true'));
+        panel.querySelectorAll('a').forEach((link) => {
+          link.addEventListener('click', () => {
+            toc.dataset.instant = 'true';
+            setOpen(false);
+            window.requestAnimationFrame(() => {
+              window.requestAnimationFrame(() => {
+                delete toc.dataset.instant;
+              });
+            });
+          });
+        });
+      });
+    }
+
     initToc();
-    document.addEventListener('astro:page-load', initToc);
+    initTocToggle();
+    document.addEventListener('astro:page-load', () => {
+      initToc();
+      initTocToggle();
+    });
   </script>
 </Layout>
 
@@ -154,36 +212,77 @@ const postSchema = JSON.stringify({
   }
 
   .article-layout {
-    @apply relative grid grid-cols-[minmax(8rem,12rem)_minmax(0,860px)] items-start gap-[clamp(2rem,6vw,4rem)] pt-16;
-    @apply border-t-0;
-    @apply max-[1040px]:block max-[1040px]:max-w-[860px] max-sm:pt-[2.25rem];
+    @apply relative mx-auto w-full max-w-[906px] pt-16;
+    @apply max-sm:pt-[2.25rem];
   }
 
-  .article-layout:not(.article-layout--no-toc) > article {
-    @apply relative -left-8 max-[1040px]:left-0;
+  .toc {
+    @apply border-2 border-ink bg-bg shadow-[6px_6px_0_0_var(--ink)];
   }
 
-  .article-layout--no-toc {
-    @apply grid-cols-[minmax(0,860px)] justify-center;
+  .toc-toggle {
+    @apply flex w-full cursor-pointer items-center justify-between gap-4 border-0 bg-transparent px-4 py-3 text-left font-heading text-[1rem] font-bold text-ink;
   }
 
-  .article-toc {
-    @apply sticky top-24 pt-[0.35rem] text-[0.78rem] max-[1040px]:hidden;
-    color: color-mix(in srgb, var(--ink) 58%, var(--muted));
+  .toc-toggle:hover {
+    color: var(--accent);
   }
 
-  .article-toc a {
-    @apply -ml-[3px] block border-l-[3px] border-transparent py-1.5 pl-3 leading-[1.35];
-    @apply transition-[border-color,color] duration-150 ease-[ease];
-    color: color-mix(in srgb, var(--ink) 75%, var(--muted));
+  .toc-toggle:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: -3px;
   }
 
-  .article-toc a:hover,
-  .article-toc a[aria-current='true'] {
-    @apply border-accent text-accent;
+  .toc-chevron {
+    @apply block shrink-0;
+    width: 0.62rem;
+    height: 0.62rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 220ms ease;
   }
 
-  .article-toc a[aria-current='true'] {
-    @apply font-bold;
+  .toc[data-open='true'] .toc-chevron {
+    transform: translateY(2px) rotate(225deg);
+  }
+
+  .toc-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .toc-panel-inner {
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .toc[data-open='true'] .toc-panel {
+    grid-template-rows: 1fr;
+  }
+
+  .toc-nav {
+    @apply flex flex-wrap gap-x-5 gap-y-2 px-4 py-4;
+    border-top: 2px solid var(--ink);
+  }
+
+  .toc-nav a {
+    @apply inline-flex items-baseline gap-1 font-heading text-[0.9rem] font-semibold text-ink;
+    @apply transition-colors duration-150;
+  }
+
+  .toc-nav a:hover,
+  .toc-nav a[aria-current='true'] {
+    color: var(--accent);
+  }
+
+  .toc-hash {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .toc[data-instant='true'] .toc-panel {
+    transition: none;
   }
 </style>
