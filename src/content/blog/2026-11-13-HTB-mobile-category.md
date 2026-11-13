@@ -5,6 +5,7 @@ date: '2026-11-13T15:57:14.089Z'
 draft: false
 tags: [Mobile, CTF, writeup]
 ---
+# Cat 
 
 # APKey
 
@@ -57,8 +58,22 @@ Còn ở `Password`, chương trình khởi tạo bộ hash `MD5`. Theo tìm hi�
 
 ![](../images/HTB-wup/APKey/img1.png)
 
-Code so sánh bằng hàm `equals()`, sẽ trả về giá trị Boolean và lưu vào `p1`. Check `if-eqz` = `if equal zero` - nếu `p1` = 0 thì nhảy đế `cond_1`, đây là nhánh `Wrong Credentials!`
+Code so sánh bằng hàm `equals()`, sẽ trả về giá trị Boolean và lưu vào `p1`. Check `if-eqz` = `if equal zero` - nếu `p1` = 0 thì nhảy đến `cond_1`, đây là nhánh `Wrong Credentials!`
 
 ![](../images/HTB-wup/APKey/img2.png)
 
 => Đổi smali từ `if-eqz` thành `if-nez (if not equal zero)` sẽ bypass được nhánh check này.
+
+Sau khi đổi thành check source code decompile trong Jadx:
+
+![](../images/HTB-wup/APKey/img3.png)
+
+Sau đó mình thử nhập `Username: admin` và `Password: 1`
+
+![](../images/HTB-wup/APKey/img4.png)
+
+Chương trình in ra Flag bằng Toast, mình thử kiểm tra method return ra đoạn Flag
+
+![](../images/HTB-wup/APKey/img5.png)
+
+Hàm return về 1 string, string này được giải mã bằng `Base64`, phần `secretKeySpec` thì được tạo ra từ nhiều chuỗi ở khác class khác nhau.
