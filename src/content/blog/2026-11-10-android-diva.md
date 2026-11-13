@@ -3,7 +3,7 @@ title: '[MASTG-APP-0007] DIVA Android'
 description: ''
 date: '2026-11-10T15:57:14.089Z'
 draft: false
-tags: [Android, Owasp]
+tags: [Android, Owasp, Mobile]
 ---
 
 # Insecure Logging
