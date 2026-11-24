@@ -6,9 +6,64 @@ draft: false
 tags: [Android, Owasp, Mobile, MAS-Crackmes]
 ---
 
+First, I noticed that the apk have root detection checking:
+
+![](../images/MAS-Crackmes/img3.png)
+
+Surprisingly that I can open the app without any notification about root detected, I can use the app normally, so lets go to check the 3 methods that detect root:
+
+```java
+public static boolean m2a() {
+    for (String str : System.getenv("PATH").split(":")) {
+        if (new File(str, "su").exists()) {
+            return true;
+        }
+    }
+}
+```
+
+Method `a()` check the environment variable `PATH` if it contains the file `su`. In default, `su` exists in `/system/xbin` but why it returned `false` in my case. So I check the folder `permission`: `ls -ld /system/xbin`
+
+![](../images/MAS-Crackmes/img4.png)
+
+Turn out the folder does not provide permission to the `Other` user. This process apk app is running as `Other`, it has its own UID because of the Android mechanism when we use `adb shell pm` to install the apk to the emulator. And because the app is `Other` so the OS refuse to query items in the folder => return `false`.
+
+```java
+public static boolean m3b() {
+    String str = Build.TAGS;
+    return str != null && str.contains("test-keys");
+}
+```
+
+I use `Frida` to extract the information of the `Build.TAGS`
+
+```javascript
+Java.perform(function () {
+  var File = Java.use('java.io.File');
+  var path = Java.use('java.lang.System').getenv('PATH');
+  console.log('Build.TAGS = ' + Java.use('android.os.Build').TAGS.value);
+});
+```
+![](../images/MAS-Crackmes/img5.png)
+
+The value does not contain `test-keys` so returning `false`. The reason is I use the standard `AVD` and `Build.TAGS` key is `dev-keys` in default.
+
+```java
+public static boolean m4c() {
+    for (String str : new String[]{"/system/app/Superuser.apk", "/system/xbin/daemonsu", "/system/etc/init.d/99SuperSUDaemon", "/system/bin/.ext/.su", "/system/etc/.has_su_daemon", "/system/etc/.installed_su_daemon", "/dev/com.koushikdutta.superuser.daemon/"}) {
+        if (new File(str).exists()) {
+            return true;
+        }
+    }
+    return false;
+}
+```
+
+The method `c()` harcord paths which are determined as root. This is an old technique for root detection.
+
 # Android UnCrackable L1
 
-First, check the source code of MainActivity:
+Check the source code of MainActivity:
 
 ```java
 public class MainActivity extends Activity {
