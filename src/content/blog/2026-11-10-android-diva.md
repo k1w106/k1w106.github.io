@@ -24,15 +24,15 @@ private void processCC(String ccstr) {
 }
 ```
 
-Activity `LogActivity` sẽ tương tác với thành phần EditText, chính là ô input của user. Sau đó, hàm call `processCC()`. Hàm này mặc định ném 1 RuntimeException và khi `checkout()` bắt được, hàm sẽ ghi vào log gồm dòng `"Error while processing transaction with credit card:" + cctxt`. Đây sẽ là thông tin nhạy cảm của user và gây nguy hiểm nếu người khác có quyền truy cập log.
+The `LogActivity` activity interacts with the EditText component, which is the user's input field. Then, the code calls `processCC()`. This function by default throws a RuntimeException, and when `checkout()` catches it, the function writes to the log the line `"Error while processing transaction with credit card:" + cctxt`. This is the user's sensitive information and is dangerous if someone else has access to the log.
 
 ```
 2026-11-12 09:00:14.456 20755-20755 diva-log jakhar.aseem.diva Error while processing transaction with credit card: 1234562
 ```
 
-# Hardcoding issues 
+# Hardcoding issues
 
-Challenge chỉ đơn giản là điền đúng credential = `vendorsecretkey` thì sẽ thoả điều kiện.
+The challenge is simply to enter the correct credential = `vendorsecretkey` to satisfy the condition.
 
 ```java
 EditText hckey = (EditText) findViewById(C0308R.id.hcKey);
@@ -45,7 +45,7 @@ if (hckey.getText().toString().equals("vendorsecretkey")) {
 
 # Insecure Data Storage - Part 1
 
-Hàm xử lý 2 chuỗi `Username` và `Password`:
+The function handles the two strings `Username` and `Password`:
 
 ```java
 public void saveCredentials(View view) {
@@ -60,29 +60,28 @@ public void saveCredentials(View view) {
 }
 ```
 
-Hàm này lưu 2 credential của user nhập vào `SharedPreferences`, đây là API của Android cho phép lưu các thông tin vặt (có thể chỉ dùng cho mục đích ngắn hạn). `Username` thì lưu vào key có tên là `user`, `Password` thì là `password`. Sơ hở là nếu attacker của quyền root device thì có thể truy cập `SharedPreferences` và lộ `Username`, `Password` nếu developer lưu trữ dữ liệu bằng cách này. 
+This function saves the two credentials entered by the user into `SharedPreferences`, which is the Android API that allows storing miscellaneous information (possibly only for short-term purposes). `Username` is stored in a key named `user`, and `Password` is stored in `password`. The weakness is that if an attacker has root access to the device, they can access `SharedPreferences` and expose `Username` and `Password` if the developer stores data this way.
 
-Ta có thể truy cập file `.xml` bằng adb:
+We can access the `.xml` file using adb:
 
 ![](../images/MASTG/Diva/img2.png)
 
 # Insecure Data Storage - Part 2
 
-Ý tưởng cũng tương tự Part 1 nhưng lần này lưu dữ liệu trong `SQLite database`.
+The idea is similar to Part 1, but this time the data is stored in a `SQLite database`.
 
-Ta có thể xem ở `/data/data/jakhar.aseem.diva/databases/ids2`:
+We can view it at `/data/data/jakhar.aseem.diva/databases/ids2`:
 
 ![](../images/MASTG/Diva/img3.png)
 
 # Insecure Data Storage - Part 3
 
-Ý tưởng cũng tương tự Part 1, 2. Lần này lưu dữ liệu trong file `tmp`.
+The idea is also similar to Parts 1 and 2. This time the data is stored in a `tmp` file.
 
 ![](../images/MASTG/Diva/img4.png)
 
 # Insecure Data Storage - Part 4
 
-Lần này ứng dụng ghi vào `External Storage (/strorage)`, là thư mục nằm ngoài ứng dụng. Lưu ý: các Android API version mới có thể không có quyền ghi vào thư mục này, khi này ta cần thêm quyền cho thư mục.
+This time the application writes to `External Storage (/strorage)`, which is a directory outside the application. Note: newer Android API versions may not have permission to write to this directory; in that case we need to add permission for the directory.
 
 ![](../images/MASTG/Diva/img5.png)
-

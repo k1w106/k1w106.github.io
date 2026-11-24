@@ -8,7 +8,7 @@ tags: [Mobile, CTF, writeup]
 
 # APKey
 
-Sau khi install file apk vào emulator thì có thể thấy trang login với `Username` và `Password`. Kiểm tra `MainActivity` ở hàm `onClick()` để xem sự kiện gì diễn ra khi ấn nút submit.
+After installing the apk file into the emulator, we can see a login page with `Username` and `Password`. Check `MainActivity` in the `onClick()` function to see what event happens when the submit button is pressed.
 
 ```java
 public void onClick(View view) {
@@ -51,28 +51,28 @@ public void onClick(View view) {
 }
 ```
 
-Nếu không gặp "Wrong Credentials!" thì `Username` phải là `admin`.
+If we do not encounter "Wrong Credentials!", then `Username` must be `admin`.
 
-Còn ở `Password`, chương trình khởi tạo bộ hash `MD5`. Theo tìm hiểu thì đây là dạng hash 1 chiều nên điều kiện check `string.equals("a2a3d412e92d896134d9c9126d756f")` khó mà reverse được. Nên ta sử dụng cách đổi code smali của chương trình sao cho rẽ hướng sang nếu không bằng `a2a3d412e92d896134d9c9126d756f` cũng có thể bypass.
+As for `Password`, the program initializes an `MD5` hash. From what we learned, this is a one-way hash, so the check condition `string.equals("a2a3d412e92d896134d9c9126d756f")` is hard to reverse. Therefore, we use the approach of modifying the program's smali code so that it branches to the other direction; even if the value is not equal to `a2a3d412e92d896134d9c9126d756f`, it can still be bypassed.
 
 ![](../images/HTB-wup/APKey/img1.png)
 
-Code so sánh bằng hàm `equals()`, sẽ trả về giá trị Boolean và lưu vào `p1`. Check `if-eqz` = `if equal zero` - nếu `p1` = 0 thì nhảy đến `cond_1`, đây là nhánh `Wrong Credentials!`
+The code compares using the `equals()` function, which returns a Boolean value and stores it in `p1`. The check `if-eqz` = `if equal zero` - if `p1` = 0, it jumps to `cond_1`, which is the `Wrong Credentials!` branch.
 
 ![](../images/HTB-wup/APKey/img2.png)
 
-=> Đổi smali từ `if-eqz` thành `if-nez (if not equal zero)` sẽ bypass được nhánh check này.
+=> Changing the smali from `if-eqz` to `if-nez (if not equal zero)` will bypass this check branch.
 
-Sau khi đổi thành check source code decompile trong Jadx:
+After changing it, check the decompiled source code in Jadx:
 
 ![](../images/HTB-wup/APKey/img3.png)
 
-Sau đó mình thử nhập `Username: admin` và `Password: 1`
+Then I try entering `Username: admin` and `Password: 1`
 
 ![](../images/HTB-wup/APKey/img4.png)
 
-Chương trình in ra Flag bằng Toast, mình thử kiểm tra method return ra đoạn Flag
+The program prints the Flag via a Toast; I try checking the method that returns the Flag.
 
 ![](../images/HTB-wup/APKey/img5.png)
 
-Hàm return về 1 string, string này được giải mã bằng `Base64`, phần `secretKeySpec` thì được tạo ra từ nhiều chuỗi ở khác class khác nhau.
+The function returns a string; this string is decoded using `Base64`, and the `secretKeySpec` part is created from multiple strings in different classes.
